@@ -1,0 +1,12 @@
+name: krea2_reference_crop
+description: Calculates pixel-exact crop rectangles for reference images, with a normalized focal point and a retained-area estimate.
+version: 0.1.0
+homepage: https://krea2.io/
+repository: https://github.com/Ri-vai/krea2-reference-tools
+issue_tracker: https://github.com/Ri-vai/krea2-reference-tools/issues
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+executables:
+  krea2-crop: krea2_crop
