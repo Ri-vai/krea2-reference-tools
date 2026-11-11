@@ -1,6 +1,6 @@
 # Krea2 Reference Tools
 
-A dependency-free Go and Swift library for calculating pixel-exact reference
+A dependency-free toolkit for calculating pixel-exact reference
 image crops. Use the result to preview framing, compare how much of an image
 survives a portrait or landscape crop, or pass the rectangle to an image editor.
 
@@ -56,6 +56,21 @@ import ReferenceCrop
 let crop = try CropPlanner.plan(
     width: 1920, height: 1080, ratio: .init(width: 4, height: 5),
     focusX: 0.8
+)
+```
+
+For Ruby 2.6+, build the gem from this repository and install it locally:
+
+```sh
+gem build krea2-reference-crop.gemspec
+gem install --local krea2-reference-crop-0.1.0.gem
+```
+
+```ruby
+require "krea2_reference_crop"
+
+crop = Krea2ReferenceCrop.plan(
+  width: 1920, height: 1080, ratio_width: 4, ratio_height: 5, focus_x: 0.8
 )
 ```
 

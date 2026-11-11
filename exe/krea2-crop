@@ -1,0 +1,27 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require "json"
+require "krea2_reference_crop"
+
+begin
+  unless [3, 5].include?(ARGV.size)
+    raise ArgumentError, "usage: krea2-crop WIDTH HEIGHT RATIO [FOCUS_X FOCUS_Y]"
+  end
+  ratio = ARGV[2].split(":", -1)
+  raise ArgumentError, "ratio must have two integer parts" unless ratio.size == 2
+
+  crop = Krea2ReferenceCrop.plan(
+    width: Integer(ARGV[0], 10),
+    height: Integer(ARGV[1], 10),
+    ratio_width: Integer(ratio[0], 10),
+    ratio_height: Integer(ratio[1], 10),
+    focus_x: ARGV.size == 5 ? Float(ARGV[3]) : 0.5,
+    focus_y: ARGV.size == 5 ? Float(ARGV[4]) : 0.5
+  )
+  puts JSON.generate(x: crop.x, y: crop.y, width: crop.width,
+                     height: crop.height, retainedFraction: crop.retained_fraction)
+rescue ArgumentError => e
+  warn e.message
+  exit 1
+end
