@@ -1,0 +1,24 @@
+name: Build Swift package
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - name: Build package and verify CLI
+        run: |
+          swift --version
+          swift package dump-package > /dev/null
+          swift build -c release
+          .build/release/krea2-crop 1920 1080 4:5 0.8 0.5 | python3 -c 'import json, sys; assert json.load(sys.stdin) == {"x": 1056, "y": 0, "width": 864, "height": 1080, "retainedFraction": 0.45}'
